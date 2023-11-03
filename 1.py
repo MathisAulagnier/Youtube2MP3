@@ -3,20 +3,20 @@ import os
 from pathlib import Path
 
 
-def youtube2mp3 (url,outdir):
-    # url input from user
+def youtube2mp3 (url,path,ext):
     yt = YouTube(url)
-
-    ##@ Extract audio with 160kbps quality from video
-    video = yt.streams.filter(abr='160kbps').last()
-
-    ##@ Downloadthe file
-    out_file = video.download(output_path=outdir)
-    base, ext = os.path.splitext(out_file)
-    new_file = Path(f'{base}.mp3')
-    os.rename(out_file, new_file)
-    ##@ Check success of download
-    if new_file.exists():
-        print(f'{yt.title} has been successfully downloaded.')
+    title = yt.title
+    if ext == '.mp3':
+        son = yt.streams.filter(only_audio=True)
+        print(son)
+        yt.streams.get_by_itag(son[-1].itag).download()
     else:
-        print(f'ERROR: {yt.title}could not be downloaded!')
+        video = yt.streams.filter(file_extension='mp4')
+        print(video)
+        yt.streams.get_by_itag(video[1].itag).download()
+
+if __name__ == '__main__':
+    url = 'https://www.youtube.com/watch?v=Cp9pk-FkE6E'
+    path = '.'
+    ext = '.mp3'
+    youtube2mp3(url,path,ext)
