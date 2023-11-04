@@ -6,7 +6,7 @@ def youtube2mp3 (url="https://www.youtube.com/watch?v=Cp9pk-FkE6E", ext = 'M'):
     yt = YouTube(url)
     title = yt.title
     print('Loading...')
-    if ext == 'music'or ext == 'm' or ext == 'M' or ext == 'Music':
+    if ext == 'music'or ext == 'm' or ext == 'M' or ext == 'Music' or ext == 'musique' or ext == 'Musique':
         son = yt.streams.filter(only_audio=True)
         yt.streams.get_by_itag(son[-1].itag).download()
         print('Success !')
